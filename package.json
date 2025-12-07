@@ -12,7 +12,7 @@
     "tauri:build": "tauri build"
   },
   "dependencies": {
-    "@ark-ui/react": "^4.6.1",
+    "@ark-ui/react": "^5.20.0",
     "@babel/standalone": "^7.23.9",
     "@monaco-editor/react": "^4.6.0",
     "@tailwindcss/postcss": "^4.1.17",

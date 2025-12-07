@@ -14,9 +14,12 @@ function App() {
     initializeStore();
   }, [initializeStore]);
 
-  const handleSplitChange = (details: any) => {
-    const panels = details.size;
-    setSplitSizes([panels[0].size, panels[1].size]);
+  const handleSplitChange = (details: Splitter.ResizeDetails) => {
+    setSplitSizes(details.size as [number, number]);
+  };
+
+  const handleResetSplit = () => {
+    setSplitSizes([50, 50]);
   };
 
   return (
@@ -26,11 +29,12 @@ function App() {
     >
       <TitleBar />
       <Splitter.Root
-        size={[
-          { id: "editor", size: splitSizes[0], minSize: 30 },
-          { id: "output", size: splitSizes[1], minSize: 30 },
+        panels={[
+          { id: "editor", minSize: 30 },
+          { id: "output", minSize: 30 },
         ]}
-        onSizeChange={handleSplitChange}
+        size={splitSizes}
+        onResize={handleSplitChange}
         className="flex-1 flex"
       >
         <Splitter.Panel id="editor" className="overflow-hidden">
@@ -44,6 +48,7 @@ function App() {
               colors["editorCursor.foreground"] ?? "rgba(128, 128, 128, 0.1)",
             cursor: "col-resize",
           }}
+          onDoubleClick={handleResetSplit}
         />
         <Splitter.Panel id="output" className="overflow-hidden">
           <OutputPanel />
