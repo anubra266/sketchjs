@@ -80,7 +80,7 @@ export default function OutputPanel() {
   return (
     <div 
       ref={containerRef}
-      className="h-full overflow-auto"
+      className="h-full w-full overflow-auto"
       style={{
         backgroundColor: colors['editor.background'],
         color: colors['editor.foreground'],

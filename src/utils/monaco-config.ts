@@ -173,6 +173,7 @@ export function getEditorOptions(settings: any): editor.IStandaloneEditorConstru
     quickSuggestions: true,
     suggestOnTriggerCharacters: true,
     acceptSuggestionOnEnter: 'on',
+    contextmenu: false,
     parameterHints: {
       enabled: true,
     },

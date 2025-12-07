@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Split from "react-split";
+import { Splitter } from "@ark-ui/react/splitter";
 import Editor from "./components/Editor";
 import OutputPanel from "./components/OutputPanel";
 import TitleBar from "./components/TitleBar";
@@ -14,10 +14,9 @@ function App() {
     initializeStore();
   }, [initializeStore]);
 
-  const handleSplitChange = (sizes: number[]) => {
-    if (sizes.length === 2) {
-      setSplitSizes([sizes[0], sizes[1]]);
-    }
+  const handleSplitChange = (details: any) => {
+    const panels = details.size;
+    setSplitSizes([panels[0].size, panels[1].size]);
   };
 
   return (
@@ -26,22 +25,30 @@ function App() {
       style={{ backgroundColor: colors["editor.background"] }}
     >
       <TitleBar />
-      <div className="flex flex-1 overflow-hidden">
-        <Split
-          className="flex flex-1"
-          sizes={splitSizes}
-          minSize={300}
-          gutterSize={2}
-          onDragEnd={handleSplitChange}
-          gutterStyle={() => ({
+      <Splitter.Root
+        size={[
+          { id: "editor", size: splitSizes[0], minSize: 30 },
+          { id: "output", size: splitSizes[1], minSize: 30 },
+        ]}
+        onSizeChange={handleSplitChange}
+        className="flex-1 flex"
+      >
+        <Splitter.Panel id="editor" className="overflow-hidden">
+          <Editor />
+        </Splitter.Panel>
+        <Splitter.ResizeTrigger
+          id="editor:output"
+          className="w-0.5 transition-all opacity-15 hover:opacity-30"
+          style={{
             backgroundColor:
               colors["editorCursor.foreground"] ?? "rgba(128, 128, 128, 0.1)",
-          })}
-        >
-          <Editor />
+            cursor: "col-resize",
+          }}
+        />
+        <Splitter.Panel id="output" className="overflow-hidden">
           <OutputPanel />
-        </Split>
-      </div>
+        </Splitter.Panel>
+      </Splitter.Root>
     </div>
   );
 }

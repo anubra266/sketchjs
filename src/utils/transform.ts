@@ -59,7 +59,8 @@ function capturePlugin({ types: t }: any) {
 
                         const { line } = exprPath.node.loc?.start || { line: 0 }
 
-                        // Only capture naked expressions (like: doubled, 5 + 5, etc.)
+                        // Capture ALL expressions: naked vars, operations, calls, etc.
+                        // Examples: doubled, 1+1, arr.map(), str.split(), etc.
                         captureStatements.push({
                             line,
                             value: t.cloneNode(exprPath.node.expression),
